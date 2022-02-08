@@ -61,29 +61,29 @@ CREATE TABLE game
 CREATE TABLE game_usuario
 (
 	usuario_id      INT NOT NULL
-	,game_id        INT	NOT	NULL
+	,game_id        INT NOT	NULL
 	,horas_jogadas	DECIMAL(5,1) DEFAULT 0
-	,avaliacao	    DECIMAL(1,1)
+	,avaliacao	DECIMAL(1,1)
 
-	,CONSTRAINT check_avaliacao	CHECK(avaliacao	BETWEEN	0 AND 5)      
+	,CONSTRAINT check_avaliacao CHECK(avaliacao BETWEEN 0 AND 5)      
 	,FOREIGN KEY (usuario_id) REFERENCES usuario(ID)         
 	,FOREIGN KEY (game_id) REFERENCES game(ID)
 );
 
 CREATE TABLE login_usuario
 (
-	usuario_id	   INT NOT NULL UNIQUE
+	usuario_id     INT NOT NULL UNIQUE
 	,e_mail	       VARCHAR(50) NOT NULL
-	,senha		   VARCHAR(50) NOT NULL                             
+	,senha	       VARCHAR(50) NOT NULL                             
 
-	,CONSTRAINT	check_senha_len	CHECK(LENGTH(senha) >= 6)
+	,CONSTRAINT check_senha_len CHECK(LENGTH(senha) >= 6)
 	,PRIMARY KEY (e_mail)
 	,FOREIGN KEY (usuario_id) REFERENCES usuario(ID)                   
 );
 
 CREATE TABLE genero
 (
-	ID	       INT NOT NULL DEFAULT nextval('public.seq_genero')
+	ID	   INT NOT NULL DEFAULT nextval('public.seq_genero')
 	,genero	   VARCHAR(25) NOT NULL UNIQUE
 	
 	,PRIMARY KEY (ID)            
@@ -91,7 +91,7 @@ CREATE TABLE genero
 
 CREATE TABLE desenvolvedor
 (
-	ID		             INT NOT NULL DEFAULT nextval('public.seq_desenvolvedor')
+	ID		     INT NOT NULL DEFAULT nextval('public.seq_desenvolvedor')
 	,desenvolvedor       VARCHAR(50) NOT NULL UNIQUE
 
 	,PRIMARY KEY (ID)       
@@ -117,7 +117,7 @@ CREATE TABLE game_desenvolvedor
 
 CREATE TABLE venda
 (
-	ID        		INT NOT NULL DEFAULT nextval('public.seq_venda')
+	ID              INT NOT NULL DEFAULT nextval('public.seq_venda')
 	,data           TIMESTAMP NOT NULL DEFAULT NOW()
 	
 	,PRIMARY KEY (ID)
@@ -152,28 +152,28 @@ $$
 BEGIN
 
 	UPDATE usuario
-		SET	carteira = carteira - NEW.valor
+		SET carteira = carteira - NEW.valor
 		WHERE ID = NEW.usuario_id;
 	
 	INSERT INTO game_usuario (usuario_id, game_id, horas_jogadas)
 		VALUES(NEW.usuario_id,
-			   NEW.game_id,
-			   0);  
+		       NEW.game_id,
+		       0);  
 	
-	RETURN	NULL;
+	RETURN NULL;
 
 END;
-$$ LANGUAGE	plpgsql;
+$$ LANGUAGE plpgsql;
 
 
 --Procedures--
 
 
 --Procedure criada para inserir registros nas tabelas de vendas.   
-CREATE OR REPLACE PROCEDURE prc_insert_venda(var_id_venda		INT,
-											var_id_usuario		INT,
-											var_id_game		    INT,
-											var_valor			DECIMAL(5,2))
+CREATE OR REPLACE PROCEDURE prc_insert_venda(var_id_venda	INT,
+					     var_id_usuario	INT,
+					     var_id_game	INT,
+					     var_valor		DECIMAL(5,2))
 AS
 $$
 BEGIN      
@@ -193,24 +193,24 @@ $$ LANGUAGE plpgsql;
 
 --Procedure criada para inserir registros nas tabelas de usuário.
 CREATE OR REPLACE PROCEDURE prc_insert_usuario(var_id_usuario		INT,
-											  var_nome_usuario		VARCHAR(50),
-											  var_data_nascimento	DATE,         
-											  var_e_mail			VARCHAR(50),
-											  var_senha			    VARCHAR(50))
+					       var_nome_usuario		VARCHAR(50),
+					       var_data_nascimento	DATE,         
+	        			       var_e_mail		VARCHAR(50),
+					       var_senha		VARCHAR(50))
 AS 
 $$
 BEGIN
 
 	INSERT INTO usuario(nome_usuario,carteira,data_cadastro,data_nascimento)
 		VALUES (var_nome_usuario,
-				0,
-				NOW(),
-				var_data_nascimento);
+			0,
+			NOW(),
+			var_data_nascimento);
 
 	INSERT INTO login_usuario
 		VALUES (var_id_usuario,
-				var_e_mail,
-				var_senha);
+			var_e_mail,
+			var_senha);
 				
 END;
 $$ LANGUAGE plpgsql;
