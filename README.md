@@ -7,7 +7,11 @@ Nesse projeto de database design fiz um modelo com a finalidade de um software d
 
 # Tecnologias utilizadas
 
-Projeto criado na linguagem SQL, tendo um modelo em T-SQL no Microsoft SQL server e um em PostgreSQL no pgAdmin4.                   
+Projeto criado na linguagem SQL. 
+O projeto contém: 
+
+- Um modelo em T-SQL construído no Microsoft SQL server. 
+- Um modelo em PostgreSQL construído no pgAdmin4.                   
 
 # Autor
 
