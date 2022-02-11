@@ -71,7 +71,8 @@ CREATE TABLE game_usuario
 	,horas_jogadas	DECIMAL(5,1) DEFAULT 0
 	,avaliacao	DECIMAL(1,1)
 
-	,CONSTRAINT check_avaliacao CHECK(avaliacao BETWEEN 0 AND 5)      
+	,CONSTRAINT check_avaliacao CHECK(avaliacao BETWEEN 0 AND 5) 
+	,CONSTRAINT unique_game_usuario UNIQUE(usuario_id,game_id)           
 	,FOREIGN KEY (usuario_id) REFERENCES usuario(ID)         
 	,FOREIGN KEY (game_id) REFERENCES game(ID)
 );
@@ -114,6 +115,7 @@ CREATE TABLE game_genero
 
 	,FOREIGN KEY (game_id) REFERENCES game(ID)           
 	,FOREIGN KEY (genero_id) REFERENCES genero(ID)
+	,CONSTRAINT unique_game_genero UNIQUE(game_id,genero_id)
 );
 GO
 
@@ -124,6 +126,7 @@ CREATE TABLE game_desenvolvedor
 
 	,FOREIGN KEY (game_id) REFERENCES game(ID)           
 	,FOREIGN KEY (desenvolvedor_id) REFERENCES desenvolvedor(ID)
+	,CONSTRAINT unique_game_usuario UNIQUE(game_id,desenvolvedor_id)
 );
 GO
 
