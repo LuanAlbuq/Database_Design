@@ -68,6 +68,7 @@ CREATE TABLE game_usuario
 	,CONSTRAINT check_avaliacao CHECK(avaliacao BETWEEN 0 AND 5)      
 	,FOREIGN KEY (usuario_id) REFERENCES usuario(ID)         
 	,FOREIGN KEY (game_id) REFERENCES game(ID)
+	UNIQUE (usuario_id,game_id)
 );
 
 CREATE TABLE login_usuario
@@ -104,6 +105,7 @@ CREATE TABLE game_genero
 
 	,FOREIGN KEY (game_id) REFERENCES game(ID)           
 	,FOREIGN KEY (genero_id) REFERENCES genero(ID)
+	UNIQUE (game_id,genero_id)
 );
 
 CREATE TABLE game_desenvolvedor
@@ -113,6 +115,7 @@ CREATE TABLE game_desenvolvedor
 
 	,FOREIGN KEY (game_id) REFERENCES game(ID)           
 	,FOREIGN KEY (desenvolvedor_id) REFERENCES desenvolvedor(ID)
+	UNIQUE (game_id,desenvolvedor_id)
 );
 
 CREATE TABLE venda
